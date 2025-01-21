@@ -9,7 +9,8 @@
 class SimpleATM : public ATM
 {
 	private:
-		vector<Account> accounts;
+		Bank *bank;
+		vector<Account *> accounts;
 
 		Account *ac;
 		string accountName;
@@ -23,7 +24,7 @@ class SimpleATM : public ATM
 		SimpleATM();
 		~SimpleATM();
 
-    bool insertCard() override;
+    bool insertCard(Bank *bank) override;
 		bool enterPIN(const string& pin) override;
 		void selectAccount(const string& accountType) override;
 		void clear() override;

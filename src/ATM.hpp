@@ -4,13 +4,15 @@
 #include <iostream>
 #include <string>
 
+#include "Bank.hpp"
+
 using namespace std;
 
 class ATM {
 	public:
     virtual ~ATM() {};
 
-    virtual bool insertCard() = 0;
+    virtual bool insertCard(Bank *bank) = 0;
 		virtual bool enterPIN(const string& pin) = 0;
     virtual void selectAccount(const string& accountType) = 0;
 		virtual void clear() = 0;
