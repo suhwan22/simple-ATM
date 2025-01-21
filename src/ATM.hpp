@@ -16,7 +16,7 @@ class ATM {
 
     virtual void selectAccount(const string& accountType) = 0;
 
-		virtual long long seeBalance(const string& pin) = 0;
+		virtual long long seeBalance() = 0;
 		virtual void deposit(long long amount) = 0;
 		virtual void withdraw(long long amount) = 0;
 };
