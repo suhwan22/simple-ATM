@@ -1,5 +1,5 @@
 #ifndef ATM_HPP
-#define ATMP_HPP
+#define ATM_HPP
 
 #include <iostream>
 #include <string>
