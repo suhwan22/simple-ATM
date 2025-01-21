@@ -2,11 +2,12 @@
 
 ## To-Do List
 
-- [ ] **ATM ½Ã³ª¸®¿À ÀÛ¼º**
-  - »ç¿ëÀÚ Èå¸§°ú ½Ã³ª¸®¿À¸¦ ¹®¼­È­ÇÏ±â (e.g., Ä«µå »ðÀÔ ¡æ PIN ÀÔ·Â ¡æ °èÁÂ ¼±ÅÃ ¡æ ÀÔÃâ±Ý ¹× ÀÜ¾× Á¶È¸).
+- [x] **ATM ì‹œë‚˜ë¦¬ì˜¤ ìž‘ì„±**
+  - ì‚¬ìš©ìž íë¦„ê³¼ ì‹œë‚˜ë¦¬ì˜¤ë¥¼ ë¬¸ì„œí™”í•˜ê¸° (e.g., ì¹´ë“œ ì‚½ìž… â†’ PIN ìž…ë ¥ â†’ ê³„ì¢Œ ì„ íƒ â†’ ìž…ì¶œê¸ˆ ë° ìž”ì•¡ ì¡°íšŒ). <br/>
+  [ì‹œë‚˜ë¦¬ì˜¤](https://guiltless-break-8cc.notion.site/Simple-ATM-project-1823af12e17a800d87a8f7855763cc92?pvs=4)
 
-- [ ] **ATM Controller ÀÎÅÍÆäÀÌ½º ¼³°è ¹× ±¸Çö**
-  - ¾Æ·¡ ±â´ÉÀ» Æ÷ÇÔÇÑ ÀÎÅÍÆäÀÌ½º ¼³°è:
+- [ ] **ATM Controller ì¸í„°íŽ˜ì´ìŠ¤ ì„¤ê³„ ë° êµ¬í˜„**
+  - ì•„ëž˜ ê¸°ëŠ¥ì„ í¬í•¨í•œ ì¸í„°íŽ˜ì´ìŠ¤ ì„¤ê³„:
     - [ ] `insertCard()`
     - [ ] `enterPIN()`
     - [ ] `selectAccount()`
@@ -14,14 +15,14 @@
     - [ ] `deposit()`
     - [ ] `withdraw()`
 
-- [ ] **ATM ÀÎÅÍÆäÀÌ½º¸¦ »ó¼ÓÇÏ´Â Concrete Class »ý¼º**
-  - [ ] ATM ±â´ÉÀÇ ±âº» ±¸ÇöÀ» Á¦°øÇÏ´Â `SimpleATM` Å¬·¡½º ¸¸µé±â.
+- [ ] **ATM ì¸í„°íŽ˜ì´ìŠ¤ë¥¼ ìƒì†í•˜ëŠ” Concrete Class ìƒì„±**
+  - [ ] ATM ê¸°ëŠ¥ì˜ ê¸°ë³¸ êµ¬í˜„ì„ ì œê³µí•˜ëŠ” `SimpleATM` í´ëž˜ìŠ¤ ë§Œë“¤ê¸°.
 
-- [ ] **»ç¿ëÀÚ °èÁÂ Á¤º¸¸¦ °ü¸®ÇÏ´Â `Account` ÀÎÅÍÆäÀÌ½º ¼³°è**
+- [ ] **ì‚¬ìš©ìž ê³„ì¢Œ ì •ë³´ë¥¼ ê´€ë¦¬í•˜ëŠ” `Account` ì¸í„°íŽ˜ì´ìŠ¤ ì„¤ê³„**
 
-- [ ] **Account ÀÎÅÍÆäÀÌ½º¸¦ ±¸ÇöÇÏ´Â Concrete Class »ý¼º**
-  - [ ] °èÁÂ Á¤º¸¸¦ ÀúÀå ¹× °ü¸®ÇÏ´Â Å¬·¡½º ±¸Çö (e.g., `UserAccount`).
+- [ ] **Account ì¸í„°íŽ˜ì´ìŠ¤ë¥¼ êµ¬í˜„í•˜ëŠ” Concrete Class ìƒì„±**
+  - [ ] ê³„ì¢Œ ì •ë³´ë¥¼ ì €ìž¥ ë° ê´€ë¦¬í•˜ëŠ” í´ëž˜ìŠ¤ êµ¬í˜„ (e.g., `UserAccount`).
 
-- [ ] **Exception Handling** PIN ¿À·ù, Ãâ±Ý ÇÑµµ ÃÊ°ú, ÀÜ¾× ºÎÁ· µîÀ» Ã³¸®ÇÏ´Â ·ÎÁ÷ Ãß°¡.
+- [ ] **Exception Handling** PIN ì˜¤ë¥˜, ì¶œê¸ˆ í•œë„ ì´ˆê³¼, ìž”ì•¡ ë¶€ì¡± ë“±ì„ ì²˜ë¦¬í•˜ëŠ” ë¡œì§ ì¶”ê°€.
 
-- [ ] **Unit Tests ÀÛ¼º**
+- [ ] **Unit Tests ìž‘ì„±**
