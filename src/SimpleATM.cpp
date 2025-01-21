@@ -1,28 +1,10 @@
 #include "SimpleATM.hpp"
 
-SimpleATM::SimpleATM() : isInsertedCard(false), isValidPin(false), isAccountSelected(false)
-{
-	// for test
-	Account account("suhwan");
-	account.setBalance(2000000);
-	account.setAccountName("test1");
-
-	Account account2("suhwan");
-	account2.setBalance(5000000);
-	account2.setAccountName("test2");
-
-	Account account3("suhwan");
-	account3.setBalance(7777777);
-	account3.setAccountName("lucky");
-
-	accounts.push_back(account);
-	accounts.push_back(account2);
-	accounts.push_back(account3);
-}
+SimpleATM::SimpleATM() : isInsertedCard(false), isValidPin(false), isAccountSelected(false) {}
 
 SimpleATM::~SimpleATM() {}
 
-bool SimpleATM::insertCard()
+bool SimpleATM::insertCard(Bank *bank)
 {
 	cout << "Card inserted.\n";
 	cout << "Recognizing your card, please wait...\n";
@@ -30,6 +12,7 @@ bool SimpleATM::insertCard()
 	// if recognition was successful.
 	cout << "Card recognition was successful.\n";
 	isInsertedCard = true;
+	this->bank = bank;
 
 	// if you fail to recognize your card.
 	// cout << "Please insert the card again.\n";
@@ -48,40 +31,42 @@ bool SimpleATM::enterPIN(const string &pin)
 	}
 
 	cout << "\nChecking PIN, please wait...\n";
-	bool fromBankSystem;
+
 	// If the bank system successfully confirms the justification of the pin.
-	if (pin == "password")
-		fromBankSystem = true;
-	else
-		fromBankSystem = false;
-	
-	if (fromBankSystem)
-	{
-		cout << "\n * PIN verified. *\n";
-		isValidPin = true;
-	}
-	else
+	// but this test card name == username.
+
+	accounts = bank->checkPINwithCard(pin , pin);
+	if (accounts.empty())
 	{
 		cout << "\n * Invalid PIN. *\n";
 		isValidPin = false;
 	}
+	else
+	{
+		cout << "\n * PIN verified. *\n";
+		isValidPin = true;
+	}
+
 	return isValidPin;
 }
 
 void SimpleATM::selectAccount(const string &accountType)
 {
-	// 계좌 정보 가져오는 부분 수정 요망
-	// to-do get account
+	ac = nullptr;
 	for (int i = 0; i < (int)accounts.size(); i++)
 	{
-		if (accounts[i].getAccountName() == accountType)
-			ac = &accounts[i];
+		if (accounts[i]->getAccountName() == accountType)
+			ac = accounts[i];
 	}
-
+	if (ac == nullptr)
+	{
+		cout << "\n* This account name does not exist. Please select again *\n";
+		isAccountSelected = false;
+		return ;
+	}
 	accountName = accountType;
 	isAccountSelected = true;
 	cout << "you selected: " << accountName << "\n";
-
 }
 
 long long SimpleATM::seeBalance()
@@ -134,12 +119,21 @@ void SimpleATM::showMenu()
 
 void SimpleATM::run()
 {
+	// 임시 bank data
+	// 추후 DI로 변경
+	Bank testBank;
+	testBank.addAccount("suhwan", "suhwan", "test1", 1000000);
+	testBank.addAccount("suhwan", "suhwan", "test2", 1000000);
+	testBank.addAccount("suhwan", "suhwan", "lucky", 77777777);
+	testBank.addAccount("suhwan", "suhwan", "bear", 99999999);
+	testBank.addAccount("suhwan", "suhwan", "robotics", 123456789);
+
 	while (1)
 	{
 		if (!isInsertedCard)
 		{
 			cout << "Please insert card.\n";
-			if (!insertCard())
+			if (!insertCard(&testBank))
 				continue;
 		}
 		if (!isValidPin)
@@ -150,7 +144,7 @@ void SimpleATM::run()
 			if (!enterPIN(pin))
 				continue;
 		}
-		// showAccountList()
+
 		if (!isAccountSelected)
 		{
 			cout << "Please select the account you want to use.\n";
@@ -158,6 +152,8 @@ void SimpleATM::run()
 			string accountType;
 			cin >> accountType;
 			selectAccount(accountType);
+			if (!isAccountSelected)
+				continue;
 		}
 		showMenu();
 		int sel;
@@ -181,15 +177,15 @@ void SimpleATM::run()
 		else if (sel == 4)
 			isAccountSelected = false;
 		else if (sel == 5)
-			clear();
+			break;
 	}
 }
 
 void SimpleATM::showAccountList()
 {
 	cout << "--------ACCOUNTS LIST---------\n";
-	for (auto name : accounts)
-		cout << " - " << name.getAccountName() << "\n";
+	for (auto a : accounts)
+		cout << " - " << a->getAccountName() << "\n";
 	cout << "------------------------------\n";
 }
 

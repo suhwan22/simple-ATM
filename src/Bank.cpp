@@ -1,5 +1,11 @@
 #include "Bank.hpp"
 
+Bank::~Bank()
+{
+	for (auto p : accountDic)
+		delete p.second;
+}
+
 vector<Account *> Bank::checkPINwithCard(const string &card, const string &pin)
 {
 	bool isValidPin;
@@ -12,7 +18,7 @@ vector<Account *> Bank::checkPINwithCard(const string &card, const string &pin)
 		for (auto ac : accountDic)
 		{
 			if (ac.first == card)
-				accounts.push_back(&ac.second);
+				accounts.push_back(ac.second);
 		}
 	}
 	return accounts;
@@ -20,8 +26,8 @@ vector<Account *> Bank::checkPINwithCard(const string &card, const string &pin)
 
 void Bank::addAccount(const string &card, const string &username, const string &accountName, const long long &balance)
 {
-	Account nAccount(username);
-	nAccount.setAccountName(accountName);
-	nAccount.setBalance(balance);
-	accountDic.push_back({card, nAccount});
+	Account *account = new Account(username);
+	account->setAccountName(accountName);
+	account->setBalance(balance);
+	accountDic.push_back({card, account});
 }
