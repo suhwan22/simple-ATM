@@ -1,19 +1,37 @@
 #include "SimpleATM.hpp"
 
-SimpleATM::SimpleATM() : isInsertedCard(false), isValidPin(false), isAccountSelected(false) {}
+SimpleATM::SimpleATM() : isInsertedCard(false), isValidPin(false), isAccountSelected(false)
+{
+	// for test
+	Account account("suhwan");
+	account.setBalance(2000000);
+	account.setAccountName("test1");
+
+	Account account2("suhwan");
+	account2.setBalance(5000000);
+	account2.setAccountName("test2");
+
+	Account account3("suhwan");
+	account3.setBalance(7777777);
+	account3.setAccountName("lucky");
+
+	accounts.push_back(account);
+	accounts.push_back(account2);
+	accounts.push_back(account3);
+}
 
 SimpleATM::~SimpleATM() {}
 
 bool SimpleATM::insertCard()
 {
-	isInsertedCard = true;
 	cout << "Card inserted.\n";
 	cout << "Recognizing your card, please wait...\n";
 	
 	// if recognition was successful.
 	cout << "Card recognition was successful.\n";
+	isInsertedCard = true;
 
-	// If you fail to recognize your card.
+	// if you fail to recognize your card.
 	// cout << "Please insert the card again.\n";
 	// isInsertedCard = false;
 
@@ -29,7 +47,7 @@ bool SimpleATM::enterPIN(const string &pin)
 		return false;
 	}
 
-	cout << "Checking PIN, please wait...\n";
+	cout << "\nChecking PIN, please wait...\n";
 	bool fromBankSystem;
 	// If the bank system successfully confirms the justification of the pin.
 	if (pin == "password")
@@ -39,12 +57,12 @@ bool SimpleATM::enterPIN(const string &pin)
 	
 	if (fromBankSystem)
 	{
-		cout << "PIN verified.\n";
+		cout << "\n * PIN verified. *\n";
 		isValidPin = true;
 	}
 	else
 	{
-		cout << "Invalid PIN.\n";
+		cout << "\n * Invalid PIN. *\n";
 		isValidPin = false;
 	}
 	return isValidPin;
@@ -52,54 +70,66 @@ bool SimpleATM::enterPIN(const string &pin)
 
 void SimpleATM::selectAccount(const string &accountType)
 {
+	// 계좌 정보 가져오는 부분 수정 요망
+	// to-do get account
+	for (int i = 0; i < (int)accounts.size(); i++)
+	{
+		if (accounts[i].getAccountName() == accountType)
+			ac = &accounts[i];
+	}
+
 	accountName = accountType;
 	isAccountSelected = true;
 	cout << "you selected: " << accountName << "\n";
 
-	// to-do get account
 }
 
 long long SimpleATM::seeBalance()
 {
-	cout << "Current Balance: $" << balance << "\n";
+	cout << "Current Balance: $" << ac->getBalance() << "\n";
 	return balance;
 }
 
 void SimpleATM::deposit(long long amount)
 {
 	if (amount <= 0)
-		cout << "Please enter a valid deposit amount.\n";
+		cout << "\nPlease enter a valid deposit amount.\n";
 	else
 	{
+		cout << "*****************************\n";
 		cout << "Account balance\n";
-		cout << "before deposit: $" << balance << "\n";
-		balance += amount;
-		cout << "after deposit: $" << balance << "\n";
+		cout << "before deposit: $" << ac->getBalance() << "\n";
+		ac->addBalance(amount);
+		cout << "after deposit: $" << ac->getBalance() << "\n";
+		cout << "*****************************\n";
 	}
 }
 
 void SimpleATM::withdraw(long long amount)
 {
 	if (amount <= 0)
-		cout << "Please enter a valid deposit amount.\n";
+		cout << "\nPlease enter a valid deposit amount.\n";
 	else if (balance < amount)
 		cout << "not enough balance to withdraw.\n";
 	else
 	{
+		cout << "*****************************\n";
 		cout << "Account balance\n";
-		cout << "before withdraw: $" << balance << "\n";
-		balance -= amount;
-		cout << "after withdraw: $" << balance << "\n";
+		cout << "before deposit: $" << ac->getBalance() << "\n";
+		ac->subBalance(amount);
+		cout << "after deposit: $" << ac->getBalance() << "\n";
+		cout << "*****************************\n";
 	}
 }
 
 void SimpleATM::showMenu()
 {
-	cout << "-----Menu-----" << endl;
+	cout << "\n-----Menu-----\n";
 	cout << "1. see balance\n";
 	cout << "2. deposit\n";
 	cout << "3. withdraw\n";
-	cout << "4. exit\n";
+	cout << "4. select other account\n";
+	cout << "5. exit\n";
 }
 
 void SimpleATM::run()
@@ -124,10 +154,10 @@ void SimpleATM::run()
 		if (!isAccountSelected)
 		{
 			cout << "Please select the account you want to use.\n";
+			showAccountList();
 			string accountType;
 			cin >> accountType;
 			selectAccount(accountType);
-			balance = 1000000;
 		}
 		showMenu();
 		int sel;
@@ -148,7 +178,24 @@ void SimpleATM::run()
 			cin >> amount;
 			withdraw(amount);
 		}
-		if (sel == 4)
-			break;
+		else if (sel == 4)
+			isAccountSelected = false;
+		else if (sel == 5)
+			clear();
 	}
+}
+
+void SimpleATM::showAccountList()
+{
+	cout << "--------ACCOUNTS LIST---------\n";
+	for (auto name : accounts)
+		cout << " - " << name.getAccountName() << "\n";
+	cout << "------------------------------\n";
+}
+
+void SimpleATM::clear()
+{
+	isInsertedCard = false;
+	isValidPin = false;
+	isAccountSelected = false;
 }
